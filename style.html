@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Gnothi Sauton</title>
+	<script src="http://code.jquery.com/jquery-1.9.0.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<!-- <script>
+
+		function statusChangeCallback(response) {
+	    console.log('statusChangeCallback');
+	    console.log(response);
+	    // The response object is returned with a status field that lets the
+	    // app know the current login status of the person.
+	    // Full docs on the response object can be found in the documentation
+	    // for FB.getLoginStatus().
+	    if (response.status === 'connected') {
+	      // Logged into your app and Facebook.
+	      testAPI();
+	    } else {
+	      // The person is not logged into your app or we are unable to tell.
+	      document.getElementById('status').innerHTML = 'Please log ' +
+	        'into this app.';
+	    }
+	  }
+
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+		/**
+		 * This is the bootstrap / app script
+		 */
+		// wait for DOM and facebook auth
+		var docReady = $.Deferred();
+		var facebookReady = $.Deferred();
+		$(document).ready(docReady.resolve);
+		window.fbAsyncInit = function() {
+			FB.init({
+
+				appId      : '502070713469493',
+     			cookie     : true,
+      			xfbml      : true,
+     			version    : 'v2.8'
+
+			});
+			facebookReady.resolve();
+		};
+		$.when(docReady, facebookReady).then(function() {
+			if (typeof getPhotos !== 'undefined') {
+				getPhotos( function( photos ) {
+					console.log( photos );
+				});
+			}
+		});
+
+		// call facebook script
+		(function(d){
+		 var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+		 js = d.createElement('script'); js.id = id; js.async = true;
+		 js.src = "http://connect.facebook.net/en_US/all.js";
+		 d.getElementsByTagName('head')[0].appendChild(js);
+		}(document));
+
+
+		function login( callback ) {
+			FB.login(function(response) {
+				if (response.authResponse) {
+					// Handle the response object, like in statusChangeCallback() in our demo code.
+  					testAPI();
+					console.log('Welcome!  Fetching your information.... ');
+					if (callback) {
+						callback(response);
+					}
+				} else {
+					console.log('User cancelled login or did not fully authorize.');
+				}
+			},{scope: 'user_photos'} );
+		}
+
+//-------------------------- LOG IN BUTTON --------------------------
+		(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=1380784508660057";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+
+
+//-------------------------- test graph api login resuts --------------------------
+		// Here we run a very simple test of the Graph API after login is
+	  // successful.  See statusChangeCallback() for when this call is made.
+	  function testAPI() {
+	    console.log('Welcome!  Fetching your information.... ');
+	    FB.api('/me', function(response) {
+	      console.log('Successful login for: ' + response.name);
+	      document.getElementById('status').innerHTML =
+	        'Thanks for logging in, ' + response.name + '!';
+
+	       FB.api(
+		    "/{user-id}/likes",
+		    function (response) {
+		      if (response && !response.error) {}
+		    })
+	    
+	  	  })
+		        /* handle the result */
+
+		     //    var userFacebookToken = 'EAACEdEose0cBADoRjGYZAM5O2aD2PHw25r4BGwFNm9aNVIxZBQnegOt59zraICS399bfJHJtaEhlFEhWeMpnF4TU37lDyZBwZBZAf8mw2YXq2A0Trt6g0XfZAkNFcQ1KDp3Bxu01hfr837fYjXzdZBoaxDeNQyZCbwxQ3NmGDwv653ZAY5XkULuibXsKIh6eZCPlcZD';
+
+			    // function getFacebookInfo() {
+
+			    //     $.ajax('https://graph.facebook.com/me?fields=id,name,picture,hometown,gender,email,feed.include_hidden(true).limit(10),location&access_token=' + userFacebookToken, {
+			    //             success: function(response) {
+			    //                 console.log(response);
+			    //                 $("#myFirstName").text(response.first_name);
+			    //                 $("#myLastName").text(response.last_name);
+			    //                 $("#myFbName").text(response.name);
+			    //                 $("#myEmail").text(response.email);
+			    //                 $("#myHomeTown").text(response.hometown.name);
+			    //                 $("#myLocation").text(response.location.name);
+			    //                 $("#myGender").text(response.gender);
+			    //                 $("#myProfilePic").html('<img src="https://graph.facebook.com/' + response.id + '/picture"  />');
+			    //                 $("#myProfilePicLarge").html('<img src="https://graph.facebook.com/' + response.id + '/picture?type=large"  id="myDpx"/>');
+			    //                 $("#myProfileId").html('<a target="blank" href="https://facebook.com/' + response.id + '">https://facebook.com/' + response.id + '</a>');
+
+			    //                 var jData = response.feed.data;
+			    //                 var html = "";
+			    //                 html += "<div class='fbFeed'>" + "<ul>";
+			    //                 $.each(jData, function(index, value) {
+			    //                     if (value.id != undefined) {
+			    //                         html += "<li>" + "<div class='row'>";
+			    //                         html += '<div class="col-md-4">' + '<img src="https://graph.facebook.com/' + response.id + '/picture" class="avatar" />';
+			    //                         html += "<h3>" + '<a target="blank" href="https://facebook.com/' + response.id + '">' + response.name + '</a>' + "</h3>" + '</div>';
+			    //                         html += '<div class="col-md-8">';
+			    //                         if (response.feed.data[index].picture != undefined && response.feed.data[index].type != "link") {
+			    //                             html += '<img src="' + response.feed.data[index].picture + '" class="postPic" />';
+			    //                         }
+			    //                         if (response.feed.data[index].message != undefined) {
+			    //                             html += '<p class="message">' + value.message + '</p>';
+			    //                         }
+			    //                         if (response.feed.data[index].link != undefined && response.feed.data[index].name != undefined) {
+			    //                             html += '<a target="blank" href="' + response.feed.data[index].link + '">' + response.feed.data[index].name + '</a>';
+			    //                         }
+			    //                         html += ' </div>' + '</div>' + "</li><hr>";
+			    //                     }
+			    //                 });
+			    //                 html += "</ul>" + "</div>";
+			    //                 $(".fbFeed").append(html);
+
+			    //             },
+			    //             error: function(request, errorType, errorMessage) {
+			    //                 console.log(request);
+			    //                 console.log(errorType);
+			    //                 alert(errorType, errorMessage)
+			    //             },
+			    //             timeout: 3000,
+			    //             beforeSend: function() {
+			    //                 $('#mainbox').hide();
+			    //                 $('.card').hide();
+
+
+			    //             },
+			    //             complete: function() {
+			    //                 $('#mainbox').show();
+			    //                 $('.card').show();
+
+
+
+
+
+			    //             }
+			    //         } //end argument list
+
+
+
+        // ); // end ajax call
+//       }
+//     }
+// );
+	    // });
+	}
+	 
+	</script> -->
+
+</head>
+<body>
+	<div class="menubar"> 
+		<button class="w3-btn">Log In</button>
+		<button class="w3-btn">Create</button>
+		<button class="w3-btn">Build</button>
+		<button class="w3-btn">Produce</button>
+		<button class="w3-btn">Collaborate</button>
+	</div>
+	<div id="wrapper">
+		<div class="title">What Facebook Thinks of you</div>
+		
+		<div class="heading">Custom apperal built for you. Clothing that reflect your digital footprint. This algorithym source your interests that Facebook collects on you. Then produces data portraits based on these interests creating unique apperal for you. Actions speak louder then words. Show the world who you are with the new data-aware line ("true", "it me", "same")</div>
+		<div class="titlelink">
+			<a href src="https://www.colinrosati.com">Amelia Zhang</a> ,<a href src="https://www.colinrosati.com">Colin Rosati </a>2017
+		</div>
+		<div class="fbbox">
+			<div class="fbpost">
+			<div class="fbhead"><img class="boximg" src="images/branding/gnothi-baby4" > GNOTHI</div>
+				<img class="image1" src="Millennial-jumper.png"><img>
+
+			</div></br>
+		</div>
+		
+		<div class="fbbox">
+			<div class="fbpost">
+			<div class="fbhead"><img class="boximg" src="images/branding/gnothi-baby4" > GNOTHI</div>
+				If your interested in going down your interest hole: Login to Facebook. Toggle the triangle menu in the top right corner, select settings, navigate to ads section and open your interests and explore all of the profiles
+			</div></br>
+		</div>
+		<div class="fbbox">
+			<div class="fbpost">
+			<div class="fbhead"><img class="boximg" src="images/branding/gnothi-baby4" > GNOTHI</div>
+				Rise above the Noise
+			</div></br>
+		</div>
+		<div class="fbbox">
+			<div class="fbpost">
+			<div class="fbhead"><img class="boximg" src="images/branding/gnothi-baby4" > GNOTHI</div>
+				Get ready for pixel perfection at exponential scale
+			</div></br>
+		</div>
+		
+		<img class="image2" src="images/fbad.jpg"><img>
+		<img class="image2" src="images/fbad2.jpg"><img>
+		<img class="image2" src="images/fbad4.jpg"><img>
+		<img class="image2" src="images/fbad5.jpg"><img>
+		<img class="image2" src="images/fbad6.jpg"><img>
+		<img class="image2" src="images/fbad3.jpg"><img>
+		<img class="image3" src="images/fbad7.jpg"><img>
+
+		<div class="fbbox">
+			<div class="fbpost">
+			<div class="fbhead">
+					<img class="boximg" src="images/branding/gnothi-baby4" >
+					<div class="name">GNOTHI</div>
+					<!-- <div class="elipse">...</div>
+					<div class="date">date</div> -->
+			</div>
+				Show people your true self. Can you relate if you see someone else has addictive 3 am Amazon shopping habbits? Bond over mutual interests in cryptocurrencies, and indoor gardening by reversing ad targeting. coopting ads that profit off of you and  reify your image identity as a product. You may as well appear like you are aware of your digital identity. Be confident in knowing who you are.
+			</div></br>
+		</div>
+
+		<div class="fbbox">
+			<div class="fbpost">
+			<div class="fbhead"><img class="boximg" src="images/branding/gnothi-baby4" > GNOTHI</div>
+				#MarketingAutomationProducts #PerformingSelf #KnowThyself #gnothiseauton #LifeImitatesArt
+			</div></br>
+		</div>
+
+		<div class="fbbox">
+			<div class="fbpost">
+			<div class="fbhead"><img class="boximg" src="images/branding/gnothi-baby4" > GNOTHI</div>
+				In the 1999 film The Matrix, there is a scene in the apartment of the character known as the Oracle. Above her kitchen door hangs a plaque with the following inscription, “Nosce temet,” which is a translation of gnōthi sauton, Greek for “Know thyself,” from the temple of Apollo at Delphi. In context, the fitness of the proverb (whether for Neo or for the oracle’s ancient clients) seems fairly obvious. Those seeking Apollo’s guidance (through his mouthpiece, a priestess called the Pythia) needed first to know themselves before they could fit that guidance to their own situations. Just so, Neo must know himself first before he’ll ever understand his destiny in relation to the situations fortune has placed him in. Or, as Socrates might put it, “the unexamined life is not worth the living” Plato Symposium).
+			</div></br>
+		</div>
+
+
+		<div class="fbbox">
+			<div class="fbpost">
+			<div class="fbhead"><img class="boximg" src="images/branding/gnothi-baby4" > GNOTHI</div>
+				Online interest-based advertising means deciding which ads you might like to see based on your activity on websites and apps off of Facebook. Your activity on websites and apps off of Facebook that use Facebook's services and technologies can help us learn about which ads you might be interested in. You can see online interest-based ads from Facebook on Facebook, or on other websites and apps where we serve ads.
+				You can control whether you see online interest-based ads from Facebook in your settings. Keep in mind that if you choose not to see online interest-based ads from Facebook you’ll still see ads, but they may not be as relevant to you. If you turn on or off the ability to see online interest-based ads from Facebook, we'll apply your choice across all your devices and browsers. If you opt in on Facebook, but then later opt out on your device or with the Digital Advertising Alliance in the US, the Digital Advertising Alliance of Canada in Canada or the European Digital Advertising Alliance in Europe, we'll apply your choice to opt out only on the device or browser where you made the choice.
+			</div></br>
+		</div>
+
+		<div class="fbbox">
+			<div class="fbpost">
+			<div class="fbhead"><img class="boximg" src="images/branding/gnothi-baby4" > GNOTHI</div>
+				The Principles set out a consumer-friendly framework for the
+				collection of online data in order to facilitate the delivery
+				of advertising based on the preferences or interests of Web
+				users
+			</div></br>
+		</div>
+		
+		<div class="fbbox">
+			<div class="fbpost">
+			<div class="fbhead"><img class="boximg" src="images/branding/gnothi-baby4" > GNOTHI</div>
+				The Principles apply to the collection of data over time and across multiple
+				Web domains for the purpose of using such data to predict Web user
+				preferences or interests to deliver online advertising in the Canadian online
+				advertising ecosystem based on the preferences or interests inferred from
+				such Web viewing behaviours.
+			</div></br>
+		</div>
+		
+		
+	</div>
+</body>
+</html>
